@@ -1,4 +1,4 @@
-package com.arny.kotlinapps.presentation
+package com.arny.kotlinapps.presentation.shoplist
 
 import androidx.lifecycle.ViewModel
 import com.arny.kotlinapps.data.ShopItemsRepositoryImpl
