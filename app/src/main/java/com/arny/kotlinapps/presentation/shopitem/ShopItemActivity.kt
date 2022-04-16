@@ -64,6 +64,7 @@ class ShopItemActivity : AppCompatActivity() {
     }
 
     private fun launchAddMode() {
+        setTitle(R.string.shopitem_add_mode)
         btnSave.setOnClickListener {
             viewModel.addShopItem(tiedtName.text.toString(), tiedtCount.text.toString())
         }
@@ -71,6 +72,7 @@ class ShopItemActivity : AppCompatActivity() {
 
     private fun launchEditMode() {
         viewModel.getShopItem(shopItemId)
+        setTitle(R.string.shopitem_edit_mode)
         btnSave.setOnClickListener {
             viewModel.editShopItem(tiedtName.text.toString(), tiedtCount.text.toString())
         }
