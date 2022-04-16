@@ -12,7 +12,7 @@ object ShopItemsRepositoryImpl : ShopItemsRepository {
     private val shopListLD = MutableLiveData<List<ShopItem>>()
 
     init {
-        for (i in 0 until 1000) {
+        for (i in 0 until 5) {
             addShopItem(
                 ShopItem(
                     name = "Name $i",

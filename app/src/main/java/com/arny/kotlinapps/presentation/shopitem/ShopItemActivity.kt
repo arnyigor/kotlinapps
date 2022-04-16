@@ -3,16 +3,11 @@ package com.arny.kotlinapps.presentation.shopitem
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProvider
 import com.arny.kotlinapps.R
 import com.arny.kotlinapps.domain.models.ShopItem
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
-class ShopItemActivity : AppCompatActivity() {
+class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnShopItemEditFinish {
 
     companion object {
         private const val EXTRA_SCREEN_MODE = "EXTRA_SCREEN_MODE"
@@ -32,14 +27,6 @@ class ShopItemActivity : AppCompatActivity() {
             }
     }
 
-    private lateinit var viewModel: ShopItemViewModel
-    private lateinit var tilName: TextInputLayout
-
-    private lateinit var tiedtName: TextInputEditText
-    private lateinit var tilCount: TextInputLayout
-    private lateinit var tiedtCount: TextInputEditText
-    private lateinit var btnSave: Button
-
     private var screenMode: String = MODE_UNKNOWN
     private var shopItemId: Long = ShopItem.UNDEFINED_ID
 
@@ -47,35 +34,20 @@ class ShopItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
         parseIntent()
-        viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
-        setupView()
-        observeItem()
-        observeCountError()
-        observeNameError()
-        observeCloseScreen()
-        initScreenMode()
+        if (savedInstanceState == null) {
+            initScreenMode()
+        }
     }
 
     private fun initScreenMode() {
-        when (screenMode) {
-            MODE_EDIT -> launchEditMode()
-            MODE_ADD -> launchAddMode()
+        val fragment = when (screenMode) {
+            MODE_EDIT -> ShopItemFragment.newInstanceEdit(shopItemId)
+            MODE_ADD -> ShopItemFragment.newInstanceAdd()
+            else -> error("Unknown screen mode $screenMode")
         }
-    }
-
-    private fun launchAddMode() {
-        setTitle(R.string.shopitem_add_mode)
-        btnSave.setOnClickListener {
-            viewModel.addShopItem(tiedtName.text.toString(), tiedtCount.text.toString())
-        }
-    }
-
-    private fun launchEditMode() {
-        viewModel.getShopItem(shopItemId)
-        setTitle(R.string.shopitem_edit_mode)
-        btnSave.setOnClickListener {
-            viewModel.editShopItem(tiedtName.text.toString(), tiedtCount.text.toString())
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.shop_item_container, fragment)
+            .commit()
     }
 
     private fun parseIntent() {
@@ -95,42 +67,7 @@ class ShopItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeCloseScreen() {
-        viewModel.closeScreen.observe(this) {
-            onBackPressed()
-        }
-    }
-
-    private fun observeCountError() {
-        viewModel.errorInputCount.observe(this) { hasError ->
-            tilCount.error = getString(R.string.error_input_count).takeIf { hasError }
-        }
-    }
-
-    private fun observeNameError() {
-        viewModel.errorInputName.observe(this) { hasError ->
-            tilName.error = getString(R.string.error_input_name).takeIf { hasError }
-        }
-    }
-
-    private fun observeItem() {
-        viewModel.item.observe(this) { item ->
-            tiedtName.setText(item.name)
-            tiedtCount.setText(item.count.toString())
-        }
-    }
-
-    private fun setupView() {
-        tilName = findViewById(R.id.tilName)
-        tilCount = findViewById(R.id.tilCount)
-        tiedtName = findViewById(R.id.tiedtName)
-        tiedtCount = findViewById(R.id.tiedtCount)
-        btnSave = findViewById(R.id.btnSave)
-        tiedtName.doAfterTextChanged {
-            viewModel.resetErrorInputName()
-        }
-        tiedtCount.doAfterTextChanged {
-            viewModel.resetErrorInputCount()
-        }
+    override fun onEditFinish() {
+         onBackPressed()
     }
 }

@@ -8,4 +8,5 @@
     <string name="error_input_name">Error input name</string>
     <string name="shopitem_edit_mode">Edit shopitem</string>
     <string name="shopitem_add_mode">Add shopitem</string>
+    <string name="success">Success</string>
 </resources>
