@@ -1,15 +1,16 @@
 package com.arny.kotlinapps.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.arny.kotlinapps.R
 import com.arny.kotlinapps.domain.models.ShopItem
+import com.arny.kotlinapps.presentation.shopitem.ShopItemActivity
 import com.arny.kotlinapps.presentation.shoplist.MainViewModel
 import com.arny.kotlinapps.presentation.shoplist.ShopListAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
@@ -18,10 +19,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        setupViews()
+        observeItems()
+        setupAdapter()
+    }
+
+    private fun setupViews() {
+        val fab = findViewById<FloatingActionButton>(R.id.fabAddShopItem)
+        fab.setOnClickListener {
+            startActivity(ShopItemActivity.createAddIntent(this))
+        }
+    }
+
+    private fun observeItems() {
         viewModel.shopList.observe(this) { items ->
             showList(items)
         }
-        setupAdapter()
     }
 
     private fun showList(list: List<ShopItem>) {
@@ -51,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onItemClick(it: ShopItem) {
-        Log.i(MainActivity::class.java.simpleName, "initAdapter: item clicked:$it")
+        startActivity(ShopItemActivity.createEditIntent(this, it.id))
     }
 
     private fun getSwipeCallback(): ItemTouchHelper.SimpleCallback =
