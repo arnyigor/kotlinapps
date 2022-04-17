@@ -1,4 +1,4 @@
-package com.arny.kotlinapps.presentation.welcome
+package com.arny.kotlinapps.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Kotlinapps</string>
+    <string name="app_name">Посчитайка</string>
+    <string name="game_description">Правила игры: перед вами будет три фигуры, две снизу и одна сверху, в двух из них будут числа. Необходимо,чтобы сумма чисел из двух нижних фигур была равна  числу в верхней фигуре, для этого нужно вставить недостающее число.\n\nПример: в верхнем круге чисо 7, водном из нижних знак вопроса, в другом число 4. Значит на месте вопросительного знака должно быть 3, потому что 3 + 4 = 7</string>
+    <string name="understand">Понятно</string>
+    <string name="choose_level">Выберите уровень</string>
+    <string name="test_level">Тестовый</string>
+    <string name="easy_level">Легкий</string>
+    <string name="normal_level">Нормальный</string>
+    <string name="hard_level">Тяжёлый</string>
+    <string name="question_mark">\?</string>
+    <string name="right_answers">Правильных ответов %s (минимум %s)</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="game_results">Результаты</string>
+    <string name="require_right_answers">Необходимое количество правильных ответов: $s</string>
+    <string name="yours_points">Твои очки: $s</string>
+    <string name="need_right_answers_percent">Необходимый процент правильных ответов: $s</string>
+    <string name="answers_percent">Процент правильных ответов: $s</string>
 </resources>
