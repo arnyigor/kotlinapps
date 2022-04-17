@@ -1,4 +1,4 @@
-package com.arny.kotlinapps.presentation
+package com.arny.kotlinapps.presentation.welcome
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.arny.kotlinapps.R
 import com.arny.kotlinapps.databinding.FragmentWelcomeBinding
+import com.arny.kotlinapps.presentation.chooselevel.ChooseLevelFragment
 
 class WelcomeFragment : Fragment() {
 

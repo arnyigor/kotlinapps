@@ -8,11 +8,14 @@
     <string name="normal_level">Нормальный</string>
     <string name="hard_level">Тяжёлый</string>
     <string name="question_mark">\?</string>
-    <string name="right_answers">Правильных ответов %s (минимум %s)</string>
+    <string name="winner_result">Победа</string>
+    <string name="won_result">Проигрыш</string>
+    <string name="right_answers">Правильных ответов %d (минимум %d)</string>
     <string name="try_again">Попробовать снова</string>
     <string name="game_results">Результаты</string>
-    <string name="require_right_answers">Необходимое количество правильных ответов: $s</string>
-    <string name="yours_points">Твои очки: $s</string>
-    <string name="need_right_answers_percent">Необходимый процент правильных ответов: $s</string>
-    <string name="answers_percent">Процент правильных ответов: $s</string>
+    <string name="require_right_answers">Необходимое количество правильных ответов: %d</string>
+    <string name="yours_points">Твои очки: %d</string>
+    <string name="need_right_answers_percent">Необходимый процент правильных ответов: %d</string>
+    <string name="answers_percent">Процент правильных ответов: %d</string>
+    <string name="plus_sign">+</string>
 </resources>

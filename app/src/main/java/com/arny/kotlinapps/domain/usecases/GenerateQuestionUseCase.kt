@@ -27,10 +27,10 @@ class GenerateQuestionUseCase {
         while (setOfOptions.size < COUNT_OF_OPTIONS) {
             setOfOptions.add(random.nextInt(from, to))
         }
-
         return Question(
             sum = sum,
             visibleNumber = visibleNumber,
+            rightAnswer = rightNumber,
             options = setOfOptions.toList().shuffled()
         )
     }
