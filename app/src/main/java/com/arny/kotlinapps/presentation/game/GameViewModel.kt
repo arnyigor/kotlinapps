@@ -66,6 +66,7 @@ class GameViewModel : ViewModel() {
         getGameSettings(level)
         generateQuestion()
         startTimer()
+        updateProgress()
     }
 
     fun chooseAnswer(num: Int) {
@@ -135,6 +136,11 @@ class GameViewModel : ViewModel() {
             ResourceString(R.string.right_answers_with_min, countOfRightAnswers, minRightAnswers)
     }
 
-    private fun calcPercentOfRightAnswers(): Int = ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+    private fun calcPercentOfRightAnswers(): Int {
+        if (countOfQuestions == 0) {
+            return 0
+        }
+        return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+    }
 
 }

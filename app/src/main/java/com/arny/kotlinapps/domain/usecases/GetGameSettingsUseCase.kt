@@ -26,7 +26,7 @@ class GetGameSettingsUseCase {
         )
         HARD -> GameSettings(
             timeInSec = 40,
-            maxSum = 30,
+            maxSum = 40,
             minCountOfRightAnswers = 20,
             minPercentOrRightAnswers = 90,
         )
