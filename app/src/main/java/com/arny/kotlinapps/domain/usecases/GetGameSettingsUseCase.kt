@@ -10,24 +10,24 @@ class GetGameSettingsUseCase {
             timeInSec = 30,
             maxSum = 10,
             minCountOfRightAnswers = 10,
-            minPercentOrRightAnswers = 50,
+            minPercentOrRightAnswers = 30,
         )
         EASY -> GameSettings(
-            timeInSec = 30,
-            maxSum = 10,
-            minCountOfRightAnswers = 10,
-            minPercentOrRightAnswers = 70,
+            timeInSec = 50,
+            maxSum = 15,
+            minCountOfRightAnswers = 18,
+            minPercentOrRightAnswers = 50,
         )
         NORMAL -> GameSettings(
-            timeInSec = 40,
-            maxSum = 20,
+            timeInSec = 45,
+            maxSum = 30,
             minCountOfRightAnswers = 20,
-            minPercentOrRightAnswers = 80,
+            minPercentOrRightAnswers = 75,
         )
         HARD -> GameSettings(
             timeInSec = 40,
             maxSum = 30,
-            minCountOfRightAnswers = 30,
+            minCountOfRightAnswers = 20,
             minPercentOrRightAnswers = 90,
         )
     }
