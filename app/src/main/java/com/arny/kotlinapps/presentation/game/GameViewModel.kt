@@ -15,7 +15,7 @@ import com.arny.kotlinapps.presentation.utils.IWrappedString
 import com.arny.kotlinapps.presentation.utils.ResourceString
 import java.util.*
 
-class GameViewModel : ViewModel() {
+class GameViewModel(private val level: Level) : ViewModel() {
 
     companion object {
         const val ZERO_TIME = 0L
@@ -27,7 +27,6 @@ class GameViewModel : ViewModel() {
     private val getGameSettingsUseCase: GetGameSettingsUseCase = GetGameSettingsUseCase()
 
     private lateinit var gameSettings: GameSettings
-    private lateinit var level: Level
 
     private var timer: CountDownTimer? = null
     private var countOfRightAnswers = 0
@@ -57,13 +56,17 @@ class GameViewModel : ViewModel() {
     private val _question = MutableLiveData<Question>()
     val question: LiveData<Question> = _question
 
+    init {
+        loadGame()
+    }
+
     override fun onCleared() {
         super.onCleared()
         timer?.cancel()
     }
 
-    fun loadGame(level: Level) {
-        getGameSettings(level)
+    private fun loadGame() {
+        getGameSettings()
         generateQuestion()
         startTimer()
         updateProgress()
@@ -79,8 +82,7 @@ class GameViewModel : ViewModel() {
         _question.value = generateQuestionUseCase(gameSettings.maxSum)
     }
 
-    private fun getGameSettings(level: Level) {
-        this.level = level
+    private fun getGameSettings() {
         this.gameSettings = getGameSettingsUseCase(level)
         _minPercent.value = gameSettings.minPercentOrRightAnswers
     }

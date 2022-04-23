@@ -5,16 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.arny.kotlinapps.R
+import androidx.navigation.fragment.findNavController
 import com.arny.kotlinapps.databinding.FragmentChooseLevelBinding
 import com.arny.kotlinapps.domain.entity.Level
-import com.arny.kotlinapps.presentation.game.GameFragment
 
 class ChooseLevelFragment : Fragment() {
-    companion object {
-        const val BACK_STACK_KEY = "CHOOSE_KEY"
-        fun newInstance() = ChooseLevelFragment()
-    }
 
     private var binding: FragmentChooseLevelBinding? = null
 
@@ -54,9 +49,8 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGame(level: Level) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFragment.newInstance(level))
-            .addToBackStack(GameFragment.BACK_STACK_KEY)
-            .commit()
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level)
+        )
     }
 }

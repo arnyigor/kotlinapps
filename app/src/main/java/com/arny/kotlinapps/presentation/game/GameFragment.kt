@@ -7,36 +7,25 @@ import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.arny.kotlinapps.R
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.arny.kotlinapps.databinding.FragmentGameBinding
 import com.arny.kotlinapps.domain.entity.GameResult
-import com.arny.kotlinapps.domain.entity.Level
-import com.arny.kotlinapps.presentation.finish.GameFinishFragment
 
 class GameFragment : Fragment() {
-    companion object {
-        const val BACK_STACK_KEY = "GameFragment"
-        private const val PARAM_LEVEL = "PARAM_LEVEL"
-        fun newInstance(level: Level) = GameFragment().apply {
-            arguments = bundleOf(
-                PARAM_LEVEL to level
-            )
-        }
+    private val args by navArgs<GameFragmentArgs>()
+
+    private val viewModelFactory by lazy {
+        GameViewModelFactory(args.level)
     }
 
-    private lateinit var viewModel: GameViewModel
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[GameViewModel::class.java]
+    }
 
     private var binding: FragmentGameBinding? = null
-
-    private lateinit var level: Level
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,9 +39,7 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[GameViewModel::class.java]
         initUI()
-        viewModel.loadGame(level = level)
     }
 
     private fun initUI() {
@@ -127,13 +114,6 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameResult(gameResult: GameResult) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFinishFragment.newInstance(gameResult))
-            .addToBackStack(null)
-            .commit()
-    }
-
-    private fun parseArgs() {
-        level = requireArguments().getParcelable<Level>(PARAM_LEVEL) as Level
+        findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameFinishFragment(gameResult))
     }
 }

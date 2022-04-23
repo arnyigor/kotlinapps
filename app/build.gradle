@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -41,9 +43,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+
+    def navUi = '2.4.2'
+    implementation "androidx.navigation:navigation-fragment-ktx:$navUi"
+    implementation "androidx.navigation:navigation-ui-ktx:$navUi"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    def lifecycle_version = "2.3.1"
+    def lifecycle_version = "2.4.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 }

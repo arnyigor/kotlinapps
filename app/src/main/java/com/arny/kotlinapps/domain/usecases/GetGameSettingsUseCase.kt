@@ -7,9 +7,9 @@ import com.arny.kotlinapps.domain.entity.Level.*
 class GetGameSettingsUseCase {
     operator fun invoke(level: Level): GameSettings = when (level) {
         TEST -> GameSettings(
-            timeInSec = 30,
+            timeInSec = 10,
             maxSum = 10,
-            minCountOfRightAnswers = 10,
+            minCountOfRightAnswers = 3,
             minPercentOrRightAnswers = 30,
         )
         EASY -> GameSettings(

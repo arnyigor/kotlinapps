@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.arny.kotlinapps.R
 import com.arny.kotlinapps.databinding.FragmentWelcomeBinding
-import com.arny.kotlinapps.presentation.chooselevel.ChooseLevelFragment
 
-class WelcomeFragment : Fragment() {
+class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
 
     private var binding: FragmentWelcomeBinding? = null
 
@@ -40,9 +40,6 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun launchChooseLevelFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment)
     }
 }

@@ -6,33 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.arny.kotlinapps.R
 import com.arny.kotlinapps.databinding.FragmentGameFinishBinding
-import com.arny.kotlinapps.domain.entity.GameResult
 import com.arny.kotlinapps.domain.entity.Level
-import com.arny.kotlinapps.presentation.game.GameFragment
 import java.util.*
 
 class GameFinishFragment : Fragment() {
-    companion object {
-        private const val PARAM_GAME_RESULT = "PARAM_GAME_RESULT"
-        fun newInstance(gameResult: GameResult) = GameFinishFragment().apply {
-            arguments = bundleOf(
-                PARAM_GAME_RESULT to gameResult
-            )
-        }
-    }
 
-    private lateinit var gameResult: GameResult
+    private val args by navArgs<GameFinishFragmentArgs>()
+
     private var binding: FragmentGameFinishBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +56,7 @@ class GameFinishFragment : Fragment() {
     }
 
     private fun FragmentGameFinishBinding.setGameResult() {
+        val gameResult = args.gameResult
         tvGameResult.setText(if (gameResult.winner) R.string.winner_result else R.string.won_result)
         tvGameResultDescription.text = String.format(
             Locale.getDefault(),
@@ -95,12 +82,7 @@ class GameFinishFragment : Fragment() {
         binding = null
     }
 
-    private fun parseArgs() {
-        gameResult = requireArguments().getParcelable<GameResult>(PARAM_GAME_RESULT) as GameResult
-    }
-
     private fun launchChooseLevelFragment() {
-        requireActivity().supportFragmentManager.popBackStack(GameFragment.BACK_STACK_KEY, POP_BACK_STACK_INCLUSIVE)
+        findNavController().popBackStack()
     }
-
 }
