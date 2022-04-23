@@ -50,6 +50,9 @@ class MainViewModel : ViewModel() {
             flow { emit(useCase()) }
                 .onStart { setLoading(true) }
                 .onCompletion { setLoading(false) }
+                .map {
+                    "Result is $it"
+                }
                 .catch { cause: Throwable -> catchErrors(cause) }
         )
     }
