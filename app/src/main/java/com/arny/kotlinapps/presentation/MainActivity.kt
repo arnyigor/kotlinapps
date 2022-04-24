@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.arny.kotlinapps.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,19 +26,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeState() {
         lifecycleScope.launchWhenCreated {
-            viewModel.loading.collect {
+            viewModel.loading.collectLatest {
                 binding.pbProgress.isVisible = it
             }
         }
         lifecycleScope.launchWhenCreated {
-            viewModel.info.collect {
+            viewModel.info.collectLatest {
                 if (it.isNotBlank()) {
                     Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                 }
             }
         }
         lifecycleScope.launchWhenCreated {
-            viewModel.result.collect { result ->
+            viewModel.result.collectLatest { result ->
+                println("result:$result")
                 with(binding.tvInfo) {
                     isVisible = !result.isNullOrBlank()
                     text = result
@@ -46,7 +47,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         lifecycleScope.launchWhenCreated {
-            viewModel.error.collect { err ->
+            viewModel.progress.collectLatest { progress ->
+                binding.pbProgressLinear.progress = progress
+            }
+        }
+        lifecycleScope.launchWhenCreated {
+            viewModel.error.collectLatest { err ->
                 with(binding.tvInfo) {
                     isVisible = err.isNotBlank()
                     text = err

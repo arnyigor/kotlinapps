@@ -14,6 +14,9 @@ class MainViewModel : ViewModel() {
     private val _loading = MutableStateFlow(false)
     val loading = _loading.asStateFlow()
 
+    private val _progress = MutableStateFlow(0)
+    val progress = _progress.asStateFlow()
+
     private val _result = MutableStateFlow<String?>(null)
     val result = _result.asStateFlow()
 
@@ -50,6 +53,13 @@ class MainViewModel : ViewModel() {
             flow { emit(useCase()) }
                 .onStart { setLoading(true) }
                 .onCompletion { setLoading(false) }
+                .onEach {
+                    _result.value = it
+                    if (_progress.value < 100) {
+                        _progress.value += 10
+                        loadUseCase()
+                    }
+                }
                 .map {
                     "Result is $it"
                 }
